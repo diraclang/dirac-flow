@@ -1,0 +1,10 @@
+# Queue directories
+queues/
+test-queues/
+
+# Captured images
+*.jpg
+*.png
+
+# Node modules (if running locally)
+node_modules/

@@ -1,0 +1,31 @@
+{
+  "name": "dirac-flow",
+  "version": "0.1.0",
+  "description": "Workflow orchestration library for DIRAC - manage message queues and worker processes",
+  "type": "module",
+  "main": "lib/flow.js",
+  "exports": {
+    ".": "./lib/flow.js",
+    "./queue": "./lib/queue.js",
+    "./worker": "./lib/worker.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"No tests yet\""
+  },
+  "keywords": [
+    "dirac",
+    "workflow",
+    "orchestration",
+    "queue",
+    "worker"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dirac-lang": "*"
+  },
+  "peerDependencies": {
+    "dirac-lang": ">=0.1.21"
+  }
+}
