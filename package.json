@@ -3,14 +3,11 @@
   "version": "0.1.0",
   "description": "Workflow orchestration library for DIRAC - manage message queues and worker processes",
   "type": "module",
-  "main": "lib/flow.js",
-  "exports": {
-    ".": "./lib/flow.js",
-    "./queue": "./lib/queue.js",
-    "./worker": "./lib/worker.js"
-  },
+  "main": "lib/index.di",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
-    "build": "tsc",
     "test": "echo \"No tests yet\""
   },
   "keywords": [
