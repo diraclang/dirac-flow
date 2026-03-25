@@ -12,9 +12,26 @@
     <parameters select="@dir"/>
     
     <eval>
-      // Calculate absolute path to queue.js
-      const queuePath = path.resolve(__dirname, '../lib/queue.js');
-      const { QueueManager } = await import(queuePath);
+      // Import queue.js using file:// URL for reliable ES module import
+      // Find the directory containing flow.di
+      let flowLibDir;
+      if (session.currentFile && session.currentFile.includes('flow.di')) {
+        // We're inside flow.di right now
+        flowLibDir = path.dirname(session.currentFile);
+      } else {
+        // Look for flow.di in imported files
+        const flowDiPath = Array.from(session.importedFiles || []).find(f => f.endsWith('flow.di'));
+        if (flowDiPath) {
+          flowLibDir = path.dirname(flowDiPath);
+        } else {
+          throw new Error('Cannot determine flow.di location for queue.js import');
+        }
+      }
+      
+      const queuePath = path.join(flowLibDir, 'queue.js');
+      const queueUrl = `file://${queuePath}`;
+      
+      const { QueueManager } = await import(queueUrl);
       
       const queueDir = (typeof dir !== 'undefined' ? dir : null) || session.flowQueueDir || './queues';
       
@@ -113,9 +130,23 @@
     <output>[DEBUG] Message: '<variable name="message"/>'</output>
     
     <eval>
-      // Calculate absolute path to queue.js
-      const queuePath = path.resolve(__dirname, '../lib/queue.js');
-      const { QueueManager } = await import(queuePath);
+      // Import queue.js using file:// URL for reliable ES module import
+      let flowLibDir;
+      if (session.currentFile && session.currentFile.includes('flow.di')) {
+        flowLibDir = path.dirname(session.currentFile);
+      } else {
+        const flowDiPath = Array.from(session.importedFiles || []).find(f => f.endsWith('flow.di'));
+        if (flowDiPath) {
+          flowLibDir = path.dirname(flowDiPath);
+        } else {
+          throw new Error('Cannot determine flow.di location for queue.js import');
+        }
+      }
+      
+      const queuePath = path.join(flowLibDir, 'queue.js');
+      const queueUrl = `file://${queuePath}`;
+      
+      const { QueueManager } = await import(queueUrl);
       
       const queueName = queue;
       const queueDir = (typeof dir !== 'undefined' ? dir : null) || session.flowQueueDir || './queues';

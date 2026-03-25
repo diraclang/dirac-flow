@@ -13,7 +13,7 @@
   - Saves updated history back to file after each LLM response
 -->
 <dirac>
-  <import src="../../dirac/lib/native-tags.di" />
+  <import src="dirac/lib/native-tags.di" />
   
   <!-- Read message from stdin (provided by queue system) -->
   <defvar name="command"><input source="stdin" mode="all"/></defvar>

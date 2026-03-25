@@ -5,7 +5,7 @@
     <reply chat_id="123456" text="bot response" />
 -->
 <dirac>
-  <import src="../../dirac-stdlib/lib/telegram.di" />
+  <import src="dirac-stdlib/lib/telegram.di" />
   
   <!-- Get bot token from environment -->
   <defvar name="bot_token" trim="true"><environment name="TELEGRAM_BOT_TOKEN" /></defvar>
