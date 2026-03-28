@@ -24,9 +24,9 @@
               param-text="string:required:User message text" 
               param-sender="string:optional:Sender name">
     <!-- 1. Load dialog history from file -->
-    <defvar name="dialog_file">../queues/telegram-dialogs/<variable name="chat_id" />.json</defvar>
-    <defvar name="chat_dialog">
-      <system>cat <variable name="dialog_file" /> 2>/dev/null || echo '[]'</system>
+    <defvar name="dialog_file" trim="true">../queues/telegram-dialogs/<variable name="chat_id" />.json</defvar>
+    <defvar name="chat_dialog" trim="true">
+      <system>cat "<variable name="dialog_file" />" 2>/dev/null || echo '[]'</system>
     </defvar>
     
     <!-- 2. Process with LLM (context attribute manages the dialog) -->
@@ -35,7 +35,12 @@
     </llm>
     
     <!-- 3. Save updated dialog back to file -->
-    <system>mkdir -p ../queues/telegram-dialogs && echo '<variable name="chat_dialog" />' > <variable name="dialog_file" /></system>
+    <eval>
+      const fs = require('fs');
+      const dir = '../queues/telegram-dialogs';
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(dialog_file, JSON.stringify(chat_dialog, null, 2), 'utf-8');
+    </eval>
     
     <!-- 5. Output reply as DIRAC XML to stdout (will be sent to telegram-outgoing queue) -->
     <output>&lt;reply chat_id="<variable name="chat_id"/>" text="<variable name="response"/>" /&gt;</output>

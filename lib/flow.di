@@ -54,10 +54,17 @@
     subscribe: Subscribe to a queue - when message arrives, spawn worker
     Uses Observable pattern: queue.on('message', handler)
   -->
-  <subroutine name="subscribe">
+  <subroutine name="subscribe"
+   param-queue="string|required|a queue to for input||input-queue"
+   param-worker="string|required|a worker||telegram-worker"
+   param-output="string|optional|output queue||output-queue"
+   description="subscribe a worker to a queue, when the queue is filled, it will launch the worker to consume it"
+  >
+  <!--
     <parameters select="@queue"/>
     <parameters select="@worker"/>
     <parameters select="@output"/>
+    -->
     
     <eval>
       const { spawn } = await import('child_process');
