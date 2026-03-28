@@ -35,9 +35,12 @@
       
       const queueDir = (typeof dir !== 'undefined' ? dir : null) || session.flowQueueDir || './queues';
       
+      // Check for debug archive environment variable
+      const debugArchive = process.env.DIRAC_QUEUE_DEBUG === '1';
+      
       // Initialize queue manager if not exists
       if (!session.flowQueueManager) {
-        const qm = new QueueManager(queueDir);
+        const qm = new QueueManager(queueDir, { debugArchive });
         await qm.init();
         session.flowQueueManager = qm;
         session.flowQueueDir = queueDir;
