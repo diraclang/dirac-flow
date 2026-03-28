@@ -36,10 +36,10 @@
     
     <!-- 3. Save updated dialog back to file -->
     <eval>
-      const fs = require('fs');
+      const fsModule = require('fs');
       const dir = '../queues/telegram-dialogs';
-      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(dialog_file, JSON.stringify(chat_dialog, null, 2), 'utf-8');
+      if (!fsModule.existsSync(dir)) fsModule.mkdirSync(dir, { recursive: true });
+      fsModule.writeFileSync(dialog_file, JSON.stringify(chat_dialog, null, 2), 'utf-8');
     </eval>
     
     <!-- 5. Output reply as DIRAC XML to stdout (will be sent to telegram-outgoing queue) -->
