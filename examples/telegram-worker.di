@@ -34,13 +34,8 @@
       <variable name="text"/>
     </llm>
     
-    <!-- 3. Save updated dialog back to file -->
-    <eval>
-      const fsModule = require('fs');
-      const dir = '../queues/telegram-dialogs';
-      if (!fsModule.existsSync(dir)) fsModule.mkdirSync(dir, { recursive: true });
-      fsModule.writeFileSync(dialog_file, JSON.stringify(chat_dialog, null, 2), 'utf-8');
-    </eval>
+    <!-- 3. Save updated dialog back to file (chat_dialog is now a JSON string) -->
+    <system>mkdir -p ../queues/telegram-dialogs && printf '%s' '<variable name="chat_dialog" />' > "<variable name="dialog_file" />"</system>
     
     <!-- 5. Output reply as DIRAC XML to stdout (will be sent to telegram-outgoing queue) -->
     <output>&lt;reply chat_id="<variable name="chat_id"/>" text="<variable name="response"/>" /&gt;</output>
