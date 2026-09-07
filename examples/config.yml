@@ -3,4 +3,19 @@ llmProvider: ollama
 llmModel: llama2 
 # Add other config options as needed
 
+# Custom LLM server URL (when llmProvider is 'custom')
+#llmProvider: custom
+#customLLMUrl: http://localhost:5001
+
+# Shell init script (runs on 'dirac shell' startup)
+initScript: shell-init.di
+
+# Embedding server configuration (for tag-check similarity matching)
+embeddingServer:
+  host: localhost
+  port: 11434  # Default Ollama port
+  model: embeddinggemma  # Ollama embedding model (also: nomic-embed-text, mxbai-embed-large, all-minilm, etc.)
+
+# MongoDB configuration
 MONGODB_URI: "mongodb://localhost:27017"
+
